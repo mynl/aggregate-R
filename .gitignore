@@ -1,0 +1,31 @@
+# R session and RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+# Package build and check output
+*.Rcheck/
+*.tar.gz
+*.zip
+inst/doc/
+/doc/
+/Meta/
+
+# Data firewall: no real data in the repository, synthetic test fixtures only
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.arrow
+*.rds
+*.rda
+*.xlsx
+*.db
+*.sqlite
+*.duckdb
+.env
+*.local.yaml
+*.log
+!tests/testthat/fixtures/**
