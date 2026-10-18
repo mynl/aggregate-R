@@ -68,8 +68,14 @@ hard-coding a path: the `InstallPath` value under `HKLM:\SOFTWARE\R-core\R`, the
 ```
 Rscript -e "devtools::document()"   # regenerate NAMESPACE and man/ from roxygen comments
 Rscript -e "devtools::test()"       # unit tests, no server needed
-Rscript -e "devtools::check()"      # R CMD check, the CRAN gate; run before every bump
+Rscript -e "options(buildtools.check = function(action) TRUE); devtools::check()"
+                                    # R CMD check, the CRAN gate; run before every bump
 ```
+
+`devtools::check()` alone stops with "Could not find tools necessary to compile a package":
+pkgbuild demands Rtools on Windows even for a package with no compiled code. The
+`buildtools.check` option is the hook pkgbuild consults first (RStudio sets its own), and
+answering `TRUE` lets the check run. `R CMD check` itself needs no compiler here.
 
 In RStudio, open the `.Rproj`. `devtools::load_all()` (Ctrl+Shift+L) loads the package live,
 the counterpart of an editable install.

@@ -1,0 +1,27 @@
+Package: aggregateR
+Title: Aggregate Loss Distributions from R through 'aggregate-api'
+Version: 1.0.0
+Authors@R:
+    person("Stephen J.", "Mildenhall", , "steve@convexrisk.com", role = c("aut", "cre"))
+Description: A thin client for 'aggregate-api', the HTTP service in front
+    of the 'aggregate' actuarial library for compound (aggregate) loss
+    distributions. Write a program in the library's DecL language, build
+    it on a server, and read its exhibits, quantiles and whole frames as
+    data frames. Talks to the public server or to a private local one.
+License: BSD_3_clause + file LICENSE
+URL: https://github.com/mynl/aggregate-R
+BugReports: https://github.com/mynl/aggregate-R/issues
+Depends:
+    R (>= 4.1)
+Imports:
+    httr2,
+    jsonlite,
+    utils
+Suggests:
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1
