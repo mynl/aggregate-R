@@ -62,6 +62,8 @@ server_state <- function(server) {
     state$memo <- list()
     state$built <- list()
     state$log <- list()
+    # The example library per database; see library.R.
+    state$libraries <- list()
     assign(server, state, envir = the$servers)
   }
   state

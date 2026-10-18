@@ -1,3 +1,11 @@
+# aggregateR 1.4.0 (2026-10-18)
+
+## Added
+
+- `agg_library(database)` lists the example library's entries, name and kind, in file order.
+- `agg_program(name, database)` returns an entry's DecL program as its file spells it, ready for `agg_build()`. An unknown name says so and points at `agg_library()`.
+- The listing is fetched once per R session, server and database; a refused database is not kept.
+
 # aggregateR 1.3.0 (2026-10-18)
 
 ## Added

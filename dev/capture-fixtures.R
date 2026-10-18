@@ -82,3 +82,10 @@ save("frames-dice", call("GET", paste0("/v1/objects/", dice, "/frames")))
 download(paste0("/v1/objects/", dice, "/frame/density_df.parquet"), "frame-dice.parquet")
 download(paste0("/v1/objects/", dice, "/frame/density_df.csv"), "frame-dice.csv")
 save("meta", call("GET", "/v1/meta"))
+
+# [library]: the first few entries in file order, with the fields the client
+# reads. The whole listing is 150 KB, and the lookup is exact on name.
+listing <- jsonlite::fromJSON(call("GET", "/v1/examples")$text, simplifyVector = FALSE)
+few <- lapply(listing$items[1:5], function(i) i[c("name", "kind", "decl")])
+save("examples-few", list(status = 200L, text = jsonlite::toJSON(list(items = few),
+                                                                 auto_unbox = TRUE)))

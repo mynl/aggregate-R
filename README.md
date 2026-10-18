@@ -51,6 +51,16 @@ agg_build("(2+2)")   # a program that evaluates to a number returns it
 - **A program can name your earlier declarations:** `agg_build("port P agg.A agg.Capstone.Gross")`. If the server restarts and forgets `A`, the client builds `A` again and retries.
 - **Handles persist.** A handle carries its program and server, so one saved with `saveRDS()` works in a later R session. If the server has dropped the object, the next read rebuilds it.
 
+## The example library
+
+```r
+agg_library()                            # name and kind of every entry, in file order
+cat(agg_program("BasicBook"))            # an entry's program, ready to read or edit
+gross <- agg_build(agg_program("Capstone.Gross"))
+```
+
+The listing is fetched once per R session. Programs can also name library entries directly, as in `port P agg.A agg.Capstone.Gross`.
+
 ## Exhibits and quantiles
 
 Every function below takes a handle, or a program in its place: a program is built first, on the server's default grid, and the memo means passing the same program again costs no build.

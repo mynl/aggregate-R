@@ -466,3 +466,8 @@ Two more from the execution review, also 2026-10-18:
 - **CSV does not lose non-finite values in R.** The server writes NaN as null in Parquet and as an empty field in CSV, so both arrive as `NA` (872 cells in the portfolio's frame, identical in each); `inf` and `-inf` survive both, since R's CSV reader parses them. The difference that remains is CSV's last-bit rounding. `agg_frame()`'s help says so instead of the plan's claim.
 - **A 501 from the Parquet route also falls back to CSV,** not only a `frame_formats` without `parquet`, so a server whose meta and pyarrow disagree still answers.
 - **The frame fixtures are a 16-row discrete object** (`agg Dice dfreq [1:2] dsev [1:6]`) in both formats, kept by the `.gitignore` exception for `tests/testthat/fixtures/`.
+
+**`[library]` 1.4.0, 2026-10-18.** Acceptance: live, `agg_build(agg_program("Capstone.Gross"))` returns a handle; mocked, a second `agg_program()` sends no request, and an unknown name reads "no library entry named X; agg_library() lists them". `devtools::check()` clean. Divergences:
+
+- **A refused database is not kept,** where the add-in keeps it so a sheet of cells asks once. An R call is explicit, and a retry after a typo should ask again.
+- **The library fixture is the first five entries in file order,** captured from the local server as the add-in's `examples-few.json` was.

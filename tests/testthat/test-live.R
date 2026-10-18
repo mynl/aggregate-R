@@ -73,6 +73,13 @@ test_that("live: a density frame reads the same through Parquet and CSV", {
   }
 })
 
+test_that("live: a library entry's program builds", {
+  local_live_server()
+  program <- agg_program("Capstone.Gross")
+  expect_true("Capstone.Gross" %in% agg_library()$name)
+  expect_s3_class(agg_build(program), "agg_handle")
+})
+
 test_that("live: a port names this session's own declaration", {
   local_live_server()
   agg_build(live_agg)
