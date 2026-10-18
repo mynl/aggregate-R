@@ -1,3 +1,12 @@
+# aggregateR 1.3.0 (2026-10-18)
+
+## Added
+
+- `agg_frames(x)` lists an object's frames with their rows and columns.
+- `agg_frame(x, which = "density_df")` returns a whole frame as a plain `data.frame`. It reads Parquet through `nanoparquet` (now imported) when the server offers it, and CSV otherwise or on a 501.
+- Measured on a local server, a two-unit portfolio's `density_df` at log2 16 (65,536 by 33): Parquet 0.06 s, CSV 5.5 s. Finite values agree to 2.2e-16; gaps and infinities agree exactly.
+- The server's facts are fetched once per R session and server, for `frame_formats`.
+
 # aggregateR 1.2.0 (2026-10-18)
 
 ## Added

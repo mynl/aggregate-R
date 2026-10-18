@@ -67,6 +67,15 @@ agg_q(a, c(0.5, 0.99, 0.995))    # exact grid quantiles, named "50%", "99%", "99
 
 `agg_exhibit()` always returns a list, whether the exhibit has one block or several. The tables hold data only: the server's display formatting is dropped, a label spanning rows is repeated down each row, and header levels join into column names such as `occ Gross`.
 
+## Whole frames
+
+```r
+agg_frames(a)                    # name, rows, columns of every frame the object has
+density <- agg_frame(a)          # density_df, every row and column, as a data.frame
+```
+
+When the server offers Parquet, frames arrive as Parquet, bit-exact and fast: 65,536 rows by 33 columns read in 0.06 s from a local server, against 5.5 s through CSV. Otherwise they arrive as CSV.
+
 ## Errors
 
 Every error the package raises inherits `aggregateR_error`, so `tryCatch()` can select by class:

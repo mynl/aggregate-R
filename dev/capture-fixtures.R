@@ -66,3 +66,19 @@ save("reins-aggregatestoploss",
      call("GET", paste0("/v1/objects/", stop_loss, "/exhibit/reins")))
 save("quantiles-basicbook",
      call("GET", paste0("/v1/objects/", basic, "/quantiles?snap=false&p=0,0.5,1")))
+
+# [frames]: a small object, so its whole density frame is a few kilobytes, in
+# both formats the client reads.
+download <- function(path, file) {
+  req <- httr2::req_error(httr2::request(paste0(server, path)), is_error = function(resp) FALSE)
+  resp <- httr2::req_perform(req)
+  writeBin(httr2::resp_body_raw(resp), file.path(out, file))
+  cat(sprintf("%-28s HTTP %d, %s bytes\n", file, httr2::resp_status(resp),
+              format(length(httr2::resp_body_raw(resp)), big.mark = ",")))
+}
+dice <- jsonlite::fromJSON(call("POST", "/v1/objects",
+                                list(decl = "agg Dice dfreq [1:2] dsev [1:6]", log2 = 6))$text)$id
+save("frames-dice", call("GET", paste0("/v1/objects/", dice, "/frames")))
+download(paste0("/v1/objects/", dice, "/frame/density_df.parquet"), "frame-dice.parquet")
+download(paste0("/v1/objects/", dice, "/frame/density_df.csv"), "frame-dice.csv")
+save("meta", call("GET", "/v1/meta"))

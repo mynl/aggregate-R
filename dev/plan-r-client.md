@@ -460,3 +460,9 @@ Two more from the execution review, also 2026-10-18:
 - **`p` goes to the server as text that reads back as the same double:** the short form where it round-trips, 17 digits where it does not.
 - **`stats` joins `utils` in Imports** for `setNames()`. Both ship with R, so nothing new is installed.
 - **The committed exhibit fixtures are this repo's own,** captured by `dev/capture-fixtures.R` from a local server, rather than copies of the add-in's.
+
+**`[frames]` 1.3.0, 2026-10-18.** Acceptance: the live test repeats the 2026-10-18 check against the local server on a synthetic two-unit portfolio at log2 16: `density_df`, 65,536 by 33, through Parquet matches the CSV route on every finite value (largest relative difference 2.2e-16). Elapsed, warm, local: Parquet 0.06 s, CSV 5.53 s (recorded in NEWS). A server whose `frame_formats` lack `parquet` is read from CSV (mocked). `devtools::check()` clean. Divergences:
+
+- **CSV does not lose non-finite values in R.** The server writes NaN as null in Parquet and as an empty field in CSV, so both arrive as `NA` (872 cells in the portfolio's frame, identical in each); `inf` and `-inf` survive both, since R's CSV reader parses them. The difference that remains is CSV's last-bit rounding. `agg_frame()`'s help says so instead of the plan's claim.
+- **A 501 from the Parquet route also falls back to CSV,** not only a `frame_formats` without `parquet`, so a server whose meta and pyarrow disagree still answers.
+- **The frame fixtures are a 16-row discrete object** (`agg Dice dfreq [1:2] dsev [1:6]`) in both formats, kept by the `.gitignore` exception for `tests/testthat/fixtures/`.

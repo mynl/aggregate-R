@@ -1,0 +1,35 @@
+{
+ "frames": [
+  {
+   "name": "summary",
+   "rows": 3,
+   "columns": 8
+  },
+  {
+   "name": "tail_df",
+   "rows": 19,
+   "columns": 6
+  },
+  {
+   "name": "validation_df",
+   "rows": 3,
+   "columns": 9
+  },
+  {
+   "name": "stats_df",
+   "rows": 17,
+   "columns": 11
+  },
+  {
+   "name": "density_df",
+   "rows": 16,
+   "columns": 12
+  },
+  {
+   "name": "bs_window_df",
+   "rows": 5,
+   "columns": 12
+  }
+ ]
+}
+

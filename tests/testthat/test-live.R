@@ -56,6 +56,23 @@ test_that("live: agg_q() gives the support ends and the median", {
   expect_true(q[[1]] <= q[[2]] && q[[2]] <= q[[3]])
 })
 
+test_that("live: a density frame reads the same through Parquet and CSV", {
+  local_live_server()
+  skip_if_not("parquet" %in% agg_meta()$frame_formats, "the server offers no Parquet")
+  port <- agg_build(paste("port LiveTwo",
+                          "agg LiveU1 50 claims sev lognorm 10 cv 1.5 poisson",
+                          "agg LiveU2 20 claims sev gamma 20 cv 0.5 poisson"), log2 = 16)
+  pq <- agg_frame(port)
+  expect_identical(class(pq), "data.frame")
+  expect_equal(nrow(pq), 2^16)
+  csv <- csv_frame(read_object(port, "/v1/objects/%s/frame/density_df.csv"))
+  expect_equal(names(csv), names(pq))
+  for (col in names(pq)) {
+    finite <- is.finite(pq[[col]]) & is.finite(csv[[col]])
+    expect_equal(csv[[col]][finite], pq[[col]][finite], tolerance = 1e-15, label = col)
+  }
+})
+
 test_that("live: a port names this session's own declaration", {
   local_live_server()
   agg_build(live_agg)

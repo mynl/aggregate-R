@@ -1,0 +1,52 @@
+{
+ "version": "1.26.0",
+ "aggregate_version": "1.5.2",
+ "tables_version": "6.0.0",
+ "ntt_version": null,
+ "log2_cap": 18,
+ "log2_default": 16,
+ "build_timeout_s": 10.0,
+ "cache_max": 50,
+ "plugins": [
+  {
+   "name": "relativity",
+   "version": "0.10.0",
+   "source": "entry_point",
+   "leaves": [
+    {
+     "name": "relativity",
+     "kind": "exhibit",
+     "label": "Relativity: Table",
+     "hint": "statistics by position, the raw data underlying the grid",
+     "why": "needs an extended P&L built with a peel clause"
+    },
+    {
+     "name": "relativity",
+     "kind": "chart",
+     "label": "Grid",
+     "hint": "each position relative to gross",
+     "why": "needs an extended P&L built with a peel clause"
+    },
+    {
+     "name": "relativity_spectrum",
+     "kind": "chart",
+     "label": "Chart",
+     "hint": "sensitivity across the distortion families",
+     "why": "needs an extended P&L built with a peel clause"
+    }
+   ],
+   "error": null
+  }
+ ],
+ "decl_help": [
+  "anatomy",
+  "card"
+ ],
+ "public_url": "https://agg.mynl.com/",
+ "frame_formats": [
+  "csv",
+  "json",
+  "parquet"
+ ]
+}
+
