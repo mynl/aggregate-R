@@ -1,0 +1,112 @@
+{
+ "id": "8c9fd30316e1bdff",
+ "kind": "port",
+ "name": "P",
+ "warnings": [
+
+ ],
+ "cached": false,
+ "elapsed_ms": 259,
+ "bs": 2.0,
+ "log2": 16,
+ "mean": 19050.0,
+ "cv": 0.21742299296413778,
+ "validation": "fails sev mean, agg mean",
+ "has_reins": false,
+ "policy_limit": null,
+ "value_type": "loss",
+ "note": null,
+ "tags": [
+
+ ],
+ "components": [
+
+ ],
+ "capability": {
+  "exhibits": [
+   {
+    "name": "summary",
+    "title": "Summary",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "tail",
+    "title": "Return periods",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "stats",
+    "title": "Statistics",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "validation",
+    "title": "Validation",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "bs_window",
+    "title": "Grid sizing",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "tail_behavior",
+    "title": "Tail behavior",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "approximation",
+    "title": "Approximation",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   }
+  ],
+  "charts": [
+   "kappa",
+   "port"
+  ],
+  "primary_chart": "port",
+  "has_premium": true,
+  "premium": 21000.0,
+  "can_sharpen": true,
+  "has_sharpen": false,
+  "can_pnl": true,
+  "can_pnl_rate": true,
+  "can_pnl_pentagon": false,
+  "can_xpnl": false,
+  "can_explode": false,
+  "can_hints": true,
+  "can_reins": false,
+  "can_views": false,
+  "reins_bases": [
+
+  ],
+  "can_price": true,
+  "can_evaluate": true,
+  "can_bounds": true,
+  "can_allocate": true,
+  "can_natural_allocation": true,
+  "needs_premium": false
+ }
+}
+

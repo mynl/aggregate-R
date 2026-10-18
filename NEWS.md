@@ -1,3 +1,13 @@
+# aggregateR 1.1.0 (2026-10-18)
+
+## Added
+
+- `agg_build(decl, log2, bs)` builds a program and returns an `agg_handle`, or the number a value program such as `(2+2)` means. A character vector joins into one program, so `readLines()` of a `.agg` file works.
+- The handle carries its recipe and server, prints its grid, moments and validation, and survives `saveRDS()` into a later R session.
+- A build memo: the same program on the same grid posts once per R session and server. Building a name to a new id (a redefinition) clears it.
+- A read through a handle whose object the server evicted rebuilds it and retries. If the rebuild gives a different id, the call is refused and asks for `agg_build()`.
+- A program naming the session's own declarations (`port P agg.A ...`) survives a server restart: the client replays the missing declaration from its build log and retries.
+
 # aggregateR 1.0.0 (2026-10-18)
 
 ## Added

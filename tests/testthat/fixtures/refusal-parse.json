@@ -1,0 +1,45 @@
+{
+ "detail": {
+  "line": 1,
+  "column": 37,
+  "source": "agg A 10 claims sev lognorm 10 cv 1 poison",
+  "source_line": "agg A 10 claims sev lognorm 10 cv 1 poison",
+  "caret": "                                    ^^^^^^",
+  "got": "poison",
+  "got_type": null,
+  "expected": [
+   "'as'",
+   "'bang'",
+   "'/'",
+   "'**' or '^'",
+   "a frequency name (poisson, binomial, ...)",
+   "'-'",
+   "'mixed'",
+   "'occurrence'",
+   "'picks'",
+   "'+'",
+   "'splice'",
+   "'wts'"
+  ],
+  "expected_terminals": [
+   "AS",
+   "BANG",
+   "DIVIDE",
+   "EXPONENT",
+   "FREQ",
+   "MINUS",
+   "MIXED",
+   "OCCURRENCE",
+   "PICKS",
+   "PLUS",
+   "SPLICE",
+   "WEIGHTS"
+  ],
+  "suggestions": [
+
+  ],
+  "message": "Unexpected 'poison'.",
+  "hint": null
+ }
+}
+

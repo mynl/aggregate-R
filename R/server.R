@@ -58,6 +58,10 @@ server_state <- function(server) {
     state <- new.env(parent = emptyenv())
     state$session <- mint_session_id()
     state$meta <- NULL
+    # The client-side cache; see build.R.
+    state$memo <- list()
+    state$built <- list()
+    state$log <- list()
     assign(server, state, envir = the$servers)
   }
   state

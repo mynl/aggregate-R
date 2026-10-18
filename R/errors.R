@@ -14,7 +14,16 @@ messages <- list(
   unreachable = "server unreachable",
   timeout = "build timed out; lower log2 or simplify the program",
   rate_limited = "rate limited; try again in a minute",
-  empty_program = "the program is empty"
+  empty_program = "the program is empty",
+  not_a_handle = "expected an agg_handle from agg_build(), or a DecL program",
+  program_is_value = paste(
+    "this program is a number, not an object; pass a handle from agg_build()",
+    "or a program that declares an agg, port, sev or distortion"
+  ),
+  changed = paste(
+    "the program now builds a different object: the server changed, or a name",
+    "it uses was redefined in this session; rebuild it with agg_build()"
+  )
 )
 
 agg_abort <- function(message, class, ...) {

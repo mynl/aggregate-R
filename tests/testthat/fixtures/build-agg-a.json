@@ -1,0 +1,114 @@
+{
+ "id": "b4f2301771f7c82d",
+ "kind": "agg",
+ "name": "A",
+ "warnings": [
+
+ ],
+ "cached": true,
+ "elapsed_ms": 2,
+ "bs": 0.03125,
+ "log2": 16,
+ "mean": 100.00000000000001,
+ "cv": 0.4472135954999581,
+ "validation": "not unreasonable",
+ "has_reins": false,
+ "policy_limit": null,
+ "value_type": "loss",
+ "note": null,
+ "tags": [
+
+ ],
+ "components": [
+
+ ],
+ "capability": {
+  "exhibits": [
+   {
+    "name": "summary",
+    "title": "Summary",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "tail",
+    "title": "Return periods",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "stats",
+    "title": "Statistics",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "validation",
+    "title": "Validation",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "bs_window",
+    "title": "Grid sizing",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "tail_behavior",
+    "title": "Tail behavior",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   },
+   {
+    "name": "approximation",
+    "title": "Approximation",
+    "perspectives": [
+     "raw",
+     "insurer"
+    ]
+   }
+  ],
+  "charts": [
+   "agg",
+   "approximation",
+   "approximation_tails",
+   "ruin"
+  ],
+  "primary_chart": "agg",
+  "has_premium": false,
+  "premium": null,
+  "can_sharpen": true,
+  "has_sharpen": false,
+  "can_pnl": true,
+  "can_pnl_rate": true,
+  "can_pnl_pentagon": false,
+  "can_xpnl": true,
+  "can_explode": false,
+  "can_hints": true,
+  "can_reins": true,
+  "can_views": false,
+  "reins_bases": [
+
+  ],
+  "can_price": true,
+  "can_evaluate": true,
+  "can_bounds": true,
+  "can_allocate": false,
+  "can_natural_allocation": false,
+  "needs_premium": true
+ }
+}
+

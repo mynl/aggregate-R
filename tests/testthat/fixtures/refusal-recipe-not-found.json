@@ -1,0 +1,9 @@
+{
+ "detail": {
+  "error": "recipe_not_found",
+  "kind": "agg",
+  "name": "A",
+  "message": "no recipe named 'A' of kind 'agg'"
+ }
+}
+

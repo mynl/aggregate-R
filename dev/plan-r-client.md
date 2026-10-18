@@ -442,3 +442,12 @@ Two more from the execution review, also 2026-10-18:
 - **`agg_server()` with no argument returns the server visibly;** only setting returns the previous value invisibly. An invisible getter prints nothing at the console.
 - **`withr` is in Suggests** for the tests' options and environment variables. It comes with testthat, so nothing new is installed.
 - **`LICENSE` carries `ORGANIZATION`** as well as year and holder; R's BSD-3 template requires it, and `R CMD check` notes its absence.
+
+**`[build]` 1.1.0, 2026-10-18.** Acceptance against a local server: the handle prints; a second `agg_build()` sends 0 requests; after `DELETE /v1/objects/{id}` a read through `a` answers with the same id; `agg A` then `port P agg.A agg.Capstone.Gross` builds, and after a server restart a read through P answers in 5 requests (404, P refused for lost A, A replayed, P rebuilt to the same id, the read); saved `a` and `p` handles read in a fresh R session. The mocked flows are in `tests/testthat/test-build.R`; the live ones run with `AGGREGATER_LIVE_SERVER` set. `devtools::check()` clean. Divergences:
+
+- **The handle's requested grid lives in `recipe`**, as `recipe$decl`, `recipe$log2` and `recipe$bs`, because the plan named both the requested and the resolved grid `log2` and `bs`. The resolved values keep the top-level names.
+- **The print adds a `validation` line, and a `warning` line per build warning.** A port built at the default grid reads "fails sev mean, agg mean", which a user must see.
+- **`agg_build()` accepts a character vector,** joining non-empty elements with newlines as the add-in joins a range, so `readLines()` of a `.agg` file builds.
+- **Ruling 8 as built:** the newest logged recipe for the missing `kind.name` is replayed, retried, and repeated for any further missing name; one budget of 10 replays is shared down the recursion, since a replayed program can itself need a replay. A missing name the log does not hold is refused with the server's message.
+- **The "changed" refusal reads "the server changed, or a name it uses was redefined in this session",** since with the session's own declarations a different id has both causes.
+- **No read function is exported at 1.1.0,** so the acceptance reads used the internal `read_object()` on `GET /v1/objects/{id}`; `[exhibits]` exercises the same path through exported functions.

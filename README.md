@@ -31,6 +31,26 @@ meta$aggregate_version  # the library's version
 meta$log2_cap           # the largest grid the server builds
 ```
 
+## Build
+
+`agg_build()` sends a DecL program to the server and returns a handle:
+
+```r
+a <- agg_build("agg A 10 claims sev lognorm 10 cv 1 poisson")
+a
+#> <agg_handle> agg.A #b4f2301771f7c82d
+#>   server      http://127.0.0.1:8000
+#>   grid        log2 16, bs 0.03125
+#>   mean, cv    100, 0.447
+#>   validation  not unreasonable
+agg_build("(2+2)")   # a program that evaluates to a number returns it
+#> [1] 4
+```
+
+- **The same program on the same grid is sent once per R session.** Building it again returns the handle without a request.
+- **A program can name your earlier declarations:** `agg_build("port P agg.A agg.Capstone.Gross")`. If the server restarts and forgets `A`, the client builds `A` again and retries.
+- **Handles persist.** A handle carries its program and server, so one saved with `saveRDS()` works in a later R session. If the server has dropped the object, the next read rebuilds it.
+
 ## Errors
 
 Every error the package raises inherits `aggregateR_error`, so `tryCatch()` can select by class:
