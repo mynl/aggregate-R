@@ -451,3 +451,12 @@ Two more from the execution review, also 2026-10-18:
 - **Ruling 8 as built:** the newest logged recipe for the missing `kind.name` is replayed, retried, and repeated for any further missing name; one budget of 10 replays is shared down the recursion, since a replayed program can itself need a replay. A missing name the log does not hold is refused with the server's message.
 - **The "changed" refusal reads "the server changed, or a name it uses was redefined in this session",** since with the session's own declarations a different id has both causes.
 - **No read function is exported at 1.1.0,** so the acceptance reads used the internal `read_object()` on `GET /v1/objects/{id}`; `[exhibits]` exercises the same path through exported functions.
+
+**`[exhibits]` 1.2.0, 2026-10-18.** Acceptance: R's tables match the add-in's `flattenExhibit` spill cell for cell on the add-in's own fixtures (`summary-basicbook`, both blocks of `reins-aggregatestoploss`, `stats-basicbook`): 499 cells, 0 mismatches, compared by a scratch script running the add-in's `core.ts` under Node. Live: every exhibit of an agg, a port naming the session's own agg, and `AggregateStopLoss` reads as an `agg_exhibit` of data frames; `agg_q(a, c(0, 0.5, 1))` gives the support ends and the median. `devtools::check()` clean. Divergences:
+
+- **Value columns are typed by the IR's `dtype`:** `float` and `int` numeric (a big int arrives as a string and is read as a number), `bool` logical, anything else character. A value column the server sends without raw values (no `raw: true` on its column spec) keeps its display text rather than becoming all `NA`.
+- **`agg_exhibit` also carries `name` and `perspective`** beside `title`, `captions` and `tables`.
+- **Missing or duplicated `meta.blocks` keys fall back to `block1`, `block2`, ...**
+- **`p` goes to the server as text that reads back as the same double:** the short form where it round-trips, 17 digits where it does not.
+- **`stats` joins `utils` in Imports** for `setNames()`. Both ship with R, so nothing new is installed.
+- **The committed exhibit fixtures are this repo's own,** captured by `dev/capture-fixtures.R` from a local server, rather than copies of the add-in's.

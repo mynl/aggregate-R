@@ -52,3 +52,17 @@ save("refusal-recipe-not-found", call("POST", "/v1/objects",
                                       list(decl = "port P agg.A agg.Capstone.Gross"),
                                       paste0(session, "-fresh")))
 save("missing-object", call("GET", "/v1/objects/0000000000000000/exhibits"))
+
+# [exhibits]: the add-in's choices. BasicBook's stats exhibit has a two-level
+# stub with rowspans; AggregateStopLoss's reins exhibit has two blocks, two
+# header levels and up to three stub levels.
+id_of <- function(entry) jsonlite::fromJSON(call("POST", "/v1/objects", list(decl = entry))$text)$id
+basic <- id_of("BasicBook")
+stop_loss <- id_of("AggregateStopLoss")
+save("exhibits-basicbook", call("GET", paste0("/v1/objects/", basic, "/exhibits")))
+save("summary-basicbook", call("GET", paste0("/v1/objects/", basic, "/exhibit/summary")))
+save("stats-basicbook", call("GET", paste0("/v1/objects/", basic, "/exhibit/stats")))
+save("reins-aggregatestoploss",
+     call("GET", paste0("/v1/objects/", stop_loss, "/exhibit/reins")))
+save("quantiles-basicbook",
+     call("GET", paste0("/v1/objects/", basic, "/quantiles?snap=false&p=0,0.5,1")))

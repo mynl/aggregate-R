@@ -51,6 +51,22 @@ agg_build("(2+2)")   # a program that evaluates to a number returns it
 - **A program can name your earlier declarations:** `agg_build("port P agg.A agg.Capstone.Gross")`. If the server restarts and forgets `A`, the client builds `A` again and retries.
 - **Handles persist.** A handle carries its program and server, so one saved with `saveRDS()` works in a later R session. If the server has dropped the object, the next read rebuilds it.
 
+## Exhibits and quantiles
+
+Every function below takes a handle, or a program in its place: a program is built first, on the server's default grid, and the memo means passing the same program again costs no build.
+
+```r
+agg_exhibits(a)                  # name, title, perspectives
+ex <- agg_exhibit(a, "summary")
+ex$title                         # "Summary: A"
+ex$captions                      # one caption per block, named by block key
+ex$tables$summary_df             # a data.frame: row labels as text, values as raw numbers
+ex                               # prints the title, then each block's caption and table
+agg_q(a, c(0.5, 0.99, 0.995))    # exact grid quantiles, named "50%", "99%", "99.5%"
+```
+
+`agg_exhibit()` always returns a list, whether the exhibit has one block or several. The tables hold data only: the server's display formatting is dropped, a label spanning rows is repeated down each row, and header levels join into column names such as `occ Gross`.
+
 ## Errors
 
 Every error the package raises inherits `aggregateR_error`, so `tryCatch()` can select by class:
