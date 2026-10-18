@@ -12,15 +12,23 @@ The package is pure R and needs R 4.1 or later. On Windows it needs no Rtools.
 
 ## Choose a server
 
-**Your programs are your data.** By default the package talks to the public server, `https://agg.mynl.com`, which builds every program you send it and keeps an audit record of each. For real work, run `aggregate-api` on your own machine and point the package at it.
+**Your programs are your data.** By default the package talks to the public server, `https://agg.mynl.com`, which builds every program you send it and keeps an audit record of each. For real work, `agg_start()` runs a private server on your own machine, bound to `127.0.0.1`, and points the session at it:
 
 ```r
 library(aggregateR)
-agg_server()                          # the current server
-agg_server("http://127.0.0.1:8000")   # a local server, for the rest of this R session
+agg_start()     # a private local server for this R session
+agg_server()    # the current server, now http://127.0.0.1:<port>
 ```
 
-To make the choice stick, set `AGGREGATER_SERVER` in `.Renviron`.
+`agg_start()` needs [uv](https://docs.astral.sh/uv/) (`winget install astral-sh.uv` on Windows), which installs the server into an environment of its own; the first start downloads it, which can take a couple of minutes. `agg_stop()` stops the server, and so does quitting R.
+
+**Until `aggregate-api` 1.26 or later is on PyPI,** tell `agg_start()` where to get it:
+
+```r
+agg_start(from = "aggregate-api[parquet] @ git+https://github.com/mynl/aggregate_api")
+```
+
+To use a server you run yourself, `agg_server("http://127.0.0.1:8000")` points the session at it; to make that stick, set `AGGREGATER_SERVER` in `.Renviron`.
 
 ## Server facts
 
@@ -39,7 +47,7 @@ meta$log2_cap           # the largest grid the server builds
 a <- agg_build("agg A 10 claims sev lognorm 10 cv 1 poisson")
 a
 #> <agg_handle> agg.A #b4f2301771f7c82d
-#>   server      http://127.0.0.1:8000
+#>   server      http://127.0.0.1:23456
 #>   grid        log2 16, bs 0.03125
 #>   mean, cv    100, 0.447
 #>   validation  not unreasonable

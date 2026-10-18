@@ -471,3 +471,21 @@ Two more from the execution review, also 2026-10-18:
 
 - **A refused database is not kept,** where the add-in keeps it so a sheet of cells asks once. An R call is explicit, and a retry after a typo should ask again.
 - **The library fixture is the first five entries in file order,** captured from the local server as the add-in's `examples-few.json` was.
+
+**`[launcher]` 1.5.0, 2026-10-18.** Acceptance on this machine:
+
+- With an empty uv cache, `agg_start(from = "aggregate-api[parquet] @ git+https://github.com/mynl/aggregate_api")` answered on `127.0.0.1` in 21.8 s cold. A warm start from the checkout (`@ file:///V:/dev/aggregate-api`) took 6.1 s.
+- Every R block of the README ran end to end against the warm server.
+- `agg_stop()` left no listener on the port.
+- Quitting R with the server running left no listener and no `uvx` process.
+- Without `from`, uv's "only aggregate-api[parquet]==1.0.0 is available" came back in 2.1 s, followed by the instruction to pass `from`.
+- `devtools::check()` clean.
+
+Divergences:
+
+- **A local server runs PyPI's `aggregate` 1.2.0,** whether installed from git or the checkout, because uv resolves the library from PyPI. The public server runs 1.5.2. The same program can therefore get a different id and different numbers (`agg A ...` was `b4f2301771f7c82d` on 1.5.2 and `fee737f2a29ccb3b` on 1.2.0). The plan foresaw this; publishing `aggregate` closes it.
+- **`agg_start()` refuses while its own server runs,** and `agg_stop()` restores the previous server only if the session still points at the local one. A user who has since chosen another server keeps it.
+- **The uv install line follows the platform:** `winget` on Windows, uv's install script elsewhere.
+- **`agg_start()` waits on `/v1/health` before checking whether the process exited,** so a server that answers and exits in the same instant is still caught on the next pass. The wait between polls is the package's mockable `wait()`.
+- **There is no live test that launches uv.** The launcher's unit tests stand in for uv and the server, and the acceptance above was run by hand.
+- **The plan stays in `dev/`,** not `dev/done/`. The house rules move a plan only when the author says it is done.

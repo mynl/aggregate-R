@@ -1,3 +1,15 @@
+# aggregateR 1.5.0 (2026-10-18)
+
+## Added
+
+- `agg_start(port, from)` runs `aggregate-api` through `uvx` on `127.0.0.1` and points the session at it; `agg_stop()` stops it and restores the previous server. Quitting R stops it too. `processx` is now imported.
+- Without uv, `agg_start()` gives the install line. Until `aggregate-api` 1.26 is on PyPI, it fails with uv's reason and asks for `from`, such as a git spec.
+- Measured on this machine: a cold start from git with an empty uv cache answered in 22 s, a warm start from a checkout in 6 s.
+
+## Changed
+
+- The first request to the public server now says `agg_start()` runs a private local server.
+
 # aggregateR 1.4.0 (2026-10-18)
 
 ## Added

@@ -6,8 +6,8 @@
 #'
 #' **Where your programs go.** By default the client talks to the public
 #' server, `https://agg.mynl.com`, and every program it builds is sent there.
-#' For real data, use [agg_server()] to point at a server on your own
-#' machine.
+#' For real data, [agg_start()] runs a private server on your own machine, or
+#' [agg_server()] points at one you run yourself.
 "_PACKAGE"
 
 # Package state for this R session. `servers` holds one environment per server
@@ -16,3 +16,5 @@
 the <- new.env(parent = emptyenv())
 the$servers <- new.env(parent = emptyenv())
 the$told_public <- FALSE
+# The server agg_start() runs, while it runs.
+the$local <- NULL

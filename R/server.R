@@ -19,8 +19,8 @@ public_server <- "https://agg.mynl.com"
 #'
 #' **Your programs are your data.** Everything sent to the public server has
 #' left your machine: it builds each program you send and keeps an audit
-#' record of it. For real work, run a server on your own machine and point
-#' `agg_server()` at it.
+#' record of it. For real work, [agg_start()] runs a private server on your
+#' own machine and points the session at it.
 #'
 #' A handle remembers the server that built it, so changing the server later
 #' does not redirect reads through an existing handle.
@@ -74,6 +74,6 @@ tell_public <- function(server) {
   if (identical(server, public_server) && !the$told_public) {
     the$told_public <- TRUE
     message("programs are sent to ", public_server,
-            "; agg_server() selects a private server.")
+            "; agg_start() runs a private local server.")
   }
 }

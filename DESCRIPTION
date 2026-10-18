@@ -1,6 +1,6 @@
 Package: aggregateR
 Title: Aggregate Loss Distributions from R through 'aggregate-api'
-Version: 1.4.0
+Version: 1.5.0
 Authors@R:
     person("Stephen J.", "Mildenhall", , "steve@convexrisk.com", role = c("aut", "cre"))
 Description: A thin client for 'aggregate-api', the HTTP service in front
@@ -17,6 +17,7 @@ Imports:
     httr2,
     jsonlite,
     nanoparquet,
+    processx,
     stats,
     utils
 Suggests:

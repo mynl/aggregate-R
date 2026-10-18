@@ -29,8 +29,8 @@ The server is the first of:
 
 \strong{Your programs are your data.} Everything sent to the public server has
 left your machine: it builds each program you send and keeps an audit
-record of it. For real work, run a server on your own machine and point
-\code{agg_server()} at it.
+record of it. For real work, \code{\link[=agg_start]{agg_start()}} runs a private server on your
+own machine and points the session at it.
 
 A handle remembers the server that built it, so changing the server later
 does not redirect reads through an existing handle.

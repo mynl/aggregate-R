@@ -15,8 +15,8 @@ and the API is its contract.
 
 \strong{Where your programs go.} By default the client talks to the public
 server, \verb{https://agg.mynl.com}, and every program it builds is sent there.
-For real data, use \code{\link[=agg_server]{agg_server()}} to point at a server on your own
-machine.
+For real data, \code{\link[=agg_start]{agg_start()}} runs a private server on your own machine, or
+\code{\link[=agg_server]{agg_server()}} points at one you run yourself.
 }
 \seealso{
 Useful links:
