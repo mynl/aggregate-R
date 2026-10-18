@@ -5,6 +5,10 @@
 .Ruserdata
 .Renviron
 
+# Link to scratch files kept outside the repository, in D:\Projects\Hacks.
+# No trailing slash: git sees a symlink as a file, not a directory.
+/hacks
+
 # Package build and check output
 *.Rcheck/
 *.tar.gz

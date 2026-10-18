@@ -4,11 +4,15 @@
 
 ## Install
 
+The package is pure R and needs R 4.1 or later. Install its four dependencies from CRAN, then the package from GitHub:
+
 ```r
-pak::pak("mynl/aggregate-R")
+install.packages(c("httr2", "jsonlite", "nanoparquet", "processx"))
+install.packages("https://github.com/mynl/aggregate-R/archive/refs/heads/master.tar.gz",
+                 repos = NULL, type = "source")
 ```
 
-The package is pure R and needs R 4.1 or later. On Windows it needs no Rtools.
+This route needs no Rtools on Windows. `pak::pak("mynl/aggregate-R")` also works and fetches the dependencies itself, but on Windows it requires Rtools even though the package has no compiled code.
 
 ## Choose a server
 
@@ -29,6 +33,61 @@ agg_start(from = "aggregate-api[parquet] @ git+https://github.com/mynl/aggregate
 ```
 
 To use a server you run yourself, `agg_server("http://127.0.0.1:8000")` points the session at it; to make that stick, set `AGGREGATER_SERVER` in `.Renviron`.
+
+## A first session
+
+The session below builds a book gross and net of an excess of loss treaty, compares their quantiles, plots both distributions, and reads a portfolio's exhibits. Run it a line at a time in RStudio. The plot needs ggplot2 (`install.packages("ggplot2")`); nothing else does.
+
+![The gross and net distributions of total loss](man/figures/README-gross-net.png)
+
+```r
+library(aggregateR)
+library(ggplot2)
+
+# One line of DecL builds a distribution: 20 expected claims, gamma mixed
+# Poisson frequency (mixing cv 0.4), and a lognormal severity with mean 250
+# and cv 2, limited to 2000.
+gross <- agg_build("agg Gross 20 claims 2000 xs 0 sev lognorm 250 cv 2 mixed gamma 0.4")
+gross                     # the handle: grid, mean, cv and a validation check
+
+# The same book net of a 1500 xs 500 per occurrence excess of loss treaty.
+net <- agg_build("agg Net 20 claims 2000 xs 0 sev lognorm 250 cv 2 occurrence net of 1500 xs 500 mixed gamma 0.4")
+p <- c(0.5, 0.9, 0.99, 0.996)
+rbind(gross = agg_q(gross, p), net = agg_q(net, p))   # exact quantiles
+#>        50%  90%   99% 99.6%
+#> gross 4257 8207 12490 14027
+#> net   3269 5878  8656  9647
+
+# The whole distribution, every bucket, as a data.frame.
+dg <- agg_frame(gross)
+dn <- agg_frame(net)
+dim(dg)                   # 65,536 rows
+both <- rbind(data.frame(loss = dg$loss, p = dg$p_total, book = "gross"),
+              data.frame(loss = dn$loss, p = dn$p_total, book = "net"))
+ggplot(subset(both, loss <= 15000), aes(loss, p, color = book)) +
+  geom_line() +
+  labs(x = "Loss", y = "Probability", color = NULL,
+       title = "Gross and net of 1500 xs 500") +
+  theme_minimal()
+# The spikes are exact probability masses: no claims at 0, the gross limit at
+# 2000, and net claims capped at 500 stacking at multiples of 500.
+
+# A portfolio of two units, Property and Casualty, and its exhibits.
+book <- agg_build(c("port Book",
+                    "  agg Property 80 claims 500 xs 0 sev lognorm 50 cv 1.2 poisson",
+                    "  agg Casualty 20 claims 2000 xs 0 sev lognorm 250 cv 2 mixed gamma 0.4"))
+agg_exhibits(book)        # the exhibits on offer
+agg_exhibit(book, "summary")   # moments and percentiles by unit, caption included
+rp <- agg_exhibit(book, "tail")$tables$tail_df
+rp[rp$unit == "total" & rp$P >= 0.9, ]   # VaR and TVaR by return period
+
+# The example library.
+lib <- agg_library()      # 198 example programs, by name and kind
+head(lib, 20)
+cat(agg_program("TwoLineBook"))   # the book above, as the library writes it
+```
+
+The quantiles shown were computed with `aggregate` 1.5.2. A local server runs whatever release of the library uv installs, which can give different numbers; `agg_meta()` shows the version.
 
 ## Server facts
 
