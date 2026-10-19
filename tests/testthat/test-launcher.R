@@ -61,7 +61,7 @@ test_that("without uv, agg_start() gives the install line", {
   expect_error(agg_start(), uv_install_line(), fixed = TRUE, class = "aggregateR_refusal")
 })
 
-test_that("a server that stops early reports its log, and asks for from when none was given", {
+test_that("a server that stops early reports its log and nothing about PyPI", {
   local_launcher()
   local_mocked_bindings(
     find_uvx = function() "uvx",
@@ -72,9 +72,8 @@ test_that("a server that stops early reports its log, and asks for from when non
     healthy = function(url) FALSE
   )
   expect_error(agg_start(port = 23456), "No solution found", class = "aggregateR_transient")
-  expect_error(agg_start(port = 23456), "pass `from`", fixed = TRUE)
-  err <- tryCatch(agg_start(port = 23456, from = "aggregate-api"), error = function(e) e)
-  expect_false(grepl("pass `from`", conditionMessage(err), fixed = TRUE))
+  err <- tryCatch(agg_start(port = 23456), error = function(e) e)
+  expect_false(grepl("PyPI", conditionMessage(err), fixed = TRUE))
   expect_null(the$local)
   expect_equal(agg_server(), "http://before.test")
 })

@@ -1,8 +1,7 @@
 # A private local server: aggregate-api run through uv, on 127.0.0.1 only.
 
 # What uv installs when `from` is not given. The floor is the first release
-# with every route this client uses; until it is on PyPI, uv fails to resolve
-# it, loudly, rather than quietly running an older release.
+# with every route this client uses, so uv never quietly runs an older one.
 default_from <- "aggregate-api[parquet]>=1.26"
 
 # The first run downloads numpy, scipy and the rest, so allow for it.
@@ -62,10 +61,6 @@ agg_start <- function(port = NULL, from = NULL) {
     if (!process$is_alive()) {
       text <- paste0("the local server stopped before it answered; the end of its log:\n",
                      log_tail(log))
-      if (is.null(from)) {
-        text <- paste0(text, "\nUntil aggregate-api 1.26 or later is on PyPI, pass `from`, such as ",
-                       "agg_start(from = \"aggregate-api[parquet] @ git+https://github.com/mynl/aggregate_api\")")
-      }
       abort_transient(text)
     }
     if (Sys.time() > deadline) {

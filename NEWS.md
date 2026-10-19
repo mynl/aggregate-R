@@ -1,3 +1,9 @@
+# aggregateR 1.5.1 (2026-10-19)
+
+## Fixed
+
+- The README and `agg_start()`'s failure message no longer say to wait for `aggregate-api` 1.26 on PyPI; it has been there since 1.26.1. A failed start now shows the end of the server's log and nothing else.
+
 # aggregateR 1.5.0 (2026-10-18)
 
 ## Added

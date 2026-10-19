@@ -26,11 +26,7 @@ agg_server()    # the current server, now http://127.0.0.1:<port>
 
 `agg_start()` needs [uv](https://docs.astral.sh/uv/) (`winget install astral-sh.uv` on Windows), which installs the server into an environment of its own; the first start downloads it, which can take a couple of minutes. `agg_stop()` stops the server, and so does quitting R.
 
-**Until `aggregate-api` 1.26 or later is on PyPI,** tell `agg_start()` where to get it:
-
-```r
-agg_start(from = "aggregate-api[parquet] @ git+https://github.com/mynl/aggregate_api")
-```
+`agg_start(from = ...)` runs another build instead, such as the development branch on GitHub; `?agg_start` shows the forms it takes.
 
 To use a server you run yourself, `agg_server("http://127.0.0.1:8000")` points the session at it; to make that stick, set `AGGREGATER_SERVER` in `.Renviron`.
 
